@@ -1,3 +1,5 @@
+import csv
+
 #stores all of the user's transactions in a dictionary (nested dictionary)
 expenditures = {}
 #a counter to keep track of the number of transactions - also used as the key for the expenditures dictionary
@@ -12,13 +14,13 @@ while True:
         amount = round(float(input("Enter the amount of the transaction: ")), 2)
         category = input("Enter the category of the transaction (e.g., food, entertainment, bills): ")
         where = input("Enter where the transaction went to (e.g., store name, online platform): ")
-        expenditures[num_of_transactions] = {"amount": amount, "category": category, "where": where}
+        expenditures[num_of_transactions] = {"date": date, "amount": amount, "category": category, "where": where}
 
     #prints the user's expenditures without showing the number of transcations which have occurred
     elif user_choice == "2":
         for transaction in expenditures.values():
             print(transaction)
-
+            
     #prints the total spending by summing up the amounts of all transactions in the expenditures dictionary
     elif user_choice == "3":
         total_spending = sum(transaction["amount"] for transaction in expenditures.values())
@@ -45,3 +47,22 @@ while True:
         break
 
     num_of_transactions += 1
+
+#outlines which each piece of sata separated by a comma is
+headers = ["date","amount","category","where"]
+rows = []
+
+#adds each value in expenditures to a list which is then added to a csv file
+for transaction in expenditures.values():
+    rows.append([
+        transaction["date"],
+        transaction["amount"],
+        transaction["category"],
+        transaction["where"]
+    ])
+
+#writes the data to a csv file
+with open("data.csv","w", newline = "") as file:
+    writer = csv.writer(file)
+    writer.writerow(headers)
+    writer.writerows(rows)
