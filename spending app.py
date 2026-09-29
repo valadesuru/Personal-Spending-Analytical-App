@@ -16,7 +16,7 @@ while True:
 
     #prints the user's expenditures without showing the number of transcations which have occurred
     elif user_choice == "2":
-        for transaction in expenditure.values():
+        for transaction in expenditures.values():
             print(transaction)
 
     #prints the total spending by summing up the amounts of all transactions in the expenditures dictionary
